@@ -19,9 +19,7 @@
     "pluginchannels": [
         "https://raw.githubusercontent.com/micro-editor/plugin-channel/master/channel.json"
     ],
-    "pluginrepos": [
-        "https://raw.githubusercontent.com/NicolaiSoeborg/filemanager-plugin/master/repo.json"
-    ],
+    "pluginrepos": [],
     "rmtrailingws": false,
     "ruler": true,
     "savecursor": false,

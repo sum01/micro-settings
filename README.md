@@ -7,4 +7,4 @@ Install plugins with `plugin install namehere` & update everything with `plugin 
 - `fzf`
 - `vcs`
 - `editorconfig` & my [preferred config](./.editorconfig)
-- [filemanager](https://github.com/NicolaiSoeborg/filemanager-plugin), which isn't in the main channel (re: [this PR](https://github.com/micro-editor/plugin-channel/pull/20))
+- `filemanager`
