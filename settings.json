@@ -1,0 +1,42 @@
+{
+    "autoclose": true,
+    "autoindent": true,
+    "autosave": false,
+    "colorcolumn": 0,
+    "colorscheme": "monokai",
+    "cursorline": true,
+    "eofnewline": false,
+    "fastdirty": true,
+    "fileformat": "unix",
+    "ftoptions": true,
+    "ignorecase": true,
+    "indentchar": " ",
+    "infobar": true,
+    "keepautoindent": false,
+    "linter": true,
+    "misspell": true,
+    "mouse": true,
+    "pluginchannels": [
+        "https://raw.githubusercontent.com/micro-editor/plugin-channel/master/channel.json"
+    ],
+    "pluginrepos": [
+        "https://raw.githubusercontent.com/NicolaiSoeborg/filemanager-plugin/master/repo.json"
+    ],
+    "rmtrailingws": false,
+    "ruler": true,
+    "savecursor": false,
+    "saveundo": false,
+    "scrollmargin": 3,
+    "scrollspeed": 2,
+    "softwrap": true,
+    "splitBottom": true,
+    "splitRight": true,
+    "statusline": true,
+    "syntax": true,
+    "tabmovement": false,
+    "tabsize": 2,
+    "tabstospaces": true,
+    "termtitle": false,
+    "trimdiff": false,
+    "useprimary": true
+}
