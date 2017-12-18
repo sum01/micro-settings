@@ -4,8 +4,6 @@ Just a small repo to backup my settings.
 
 ## Plugins
 
-Install plugins with `plugin install namehere` & update with `plugin update namehere`
-
 * `fzf`
 * `editorconfig` & my [preferred config](./.editorconfig)
 * `filemanager`
