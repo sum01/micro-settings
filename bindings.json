@@ -1,4 +1,5 @@
 {
   // Open a new vsplit
-  "Alt-v": "VSplit"
+  "Alt-v": "VSplit",
+  "Alt-t": "filemanager.toggle_tree"
 }
