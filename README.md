@@ -4,7 +4,6 @@ Just a small repo to backup my settings.
 
 ## Plugins
 
-* `fzf`
 * `editorconfig` & my [preferred config](./.editorconfig)
-* `filemanager`
+* `filemanager` [v3 by me](https://github.com/sum01/filemanager-plugin/tree/v3)
 * `fmt` [made by me](https://github.com/sum01/fmt-micro) :bowtie:
