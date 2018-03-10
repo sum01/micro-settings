@@ -23,7 +23,7 @@
     "fileformat": "unix",
     "filemanager-compressparent": false,
     "filemanager-showdotfiles": true,
-    "filemanager-showignored": false,
+    "filemanager-showignored": true,
     "fish-formatter": "",
     "flow-formatter": "prettier",
     "fmt-onsave": true,
