@@ -49,6 +49,7 @@
     "markdown-formatter": "prettier",
     "marko-formatter": "",
     "matchbrace": true,
+    "matchbraceleft": false,
     "mouse": true,
     "objective-c-formatter": "uncrustify",
     "ocaml-formatter": "",

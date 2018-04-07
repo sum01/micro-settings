@@ -1,8 +1,5 @@
 {
-	// Open a new vsplit
 	"Alt-v": "VSplit",
-	// Open a new hsplit
 	"Alt-h": "HSplit",
-	// Open/close the filemanager (v3) file browser
 	"Alt-t": "filemanager.toggle_tree"
 }
