@@ -1,0 +1,11 @@
+# A generic build dir for Cmake projects
+build
+# Created by Kdevelop
+.kdev
+.kdev4
+# Created by QtCreator
+CMakeLists.txt.user
+# Created by OSX/macOS users
+.DS_STORE
+# Created by the Dolphin file browser (maybe others?)
+.directory
