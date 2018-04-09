@@ -22,6 +22,8 @@ Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 call plug#end()
 
+" Use true-color for colorscheme
+set termguicolors
 " Colorscheme has to come after the plug#end() or it breaks things
 colorscheme monokai
 " Enables the line number ruler
@@ -35,6 +37,8 @@ set mouse=a
 set splitbelow
 " Tells splits to go to the right instead of left
 set splitright
+" Disables the preview window from opening when auto-completers (such as YouCompleteMe) trigger it.
+set completeopt-=preview
 " Remap split movement to a single key instead of having to use it with CTRL-W
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
@@ -62,7 +66,6 @@ let g:formatdef_uncrustify = '"uncrustify -q -c ~/dev/personal-configs/uncrustif
 let g:formatdef_luafmt = '"luafmt --use-tabs --stdin -i ".&shiftwidth'
 let g:formatdef_prettier_markdown = '"prettier --stdin --parser markdown --use-tabs true --tab-width ".&shiftwidth'
 let g:formatdef_shfmt = '"shfmt -s -i 0"'
-" NOTE: --tab-size 0 for tabs instead of spaces
 "let g:formatdef_cmake_format = '"cmake-format --dangle-parens true --line-ending unix --tab-size 1"'
 " Actually tells vim-autoformat to use the custom command on C++ files
 let g:formatters_cpp = ['uncrustify']
