@@ -35,13 +35,13 @@ alias n='nvim'
 
 # ~~ Shortcuts to bootstrap various project types ~~
 # Drops my preferred .editorconfig into the current dir
-alias geteconf='cp ~/dev/personal-configs/.editorconfig ./ && echo "Put editorconfig in $(pwd)"'
+alias geteconf='cp ~/dev/personal-configs/formatter-configs/.editorconfig ./ && echo "Put editorconfig in $(pwd)"'
 # Gets the Unlicense license
 alias getunlicense='cp ~/dev/personal-configs/licenses/unlicense/LICENSE ./ && echo "Put Unlicense in $(pwd)"'
 # Gets the GPL3 license
 alias getgpl3='cp ~/dev/personal-configs/licenses/gpl3/LICENSE ./ && echo "Put GPL3 in $(pwd)"'
 # Gets my preferred uncrustify config
-alias getuncrust='cp ~/dev/personal-configs/uncrustify.cfg ./ && echo "Put Uncrustify config in $(pwd)"'
+alias getuncrust='cp ~/dev/personal-configs/formatter-configs/uncrustify.cfg ./ && echo "Put Uncrustify config in $(pwd)"'
 # A command to start a new git project which gets stuff that's (almost) always needed
 alias gitinit='git init && geteconf && getgpl3'
 # A pre-configured C++ gitignore file
