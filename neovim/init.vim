@@ -20,6 +20,8 @@ Plug 'Chiel92/vim-autoformat'
 Plug 'scrooloose/nerdtree'
 " A nerdtree plugin that adds Git status indicators
 Plug 'Xuyuanp/nerdtree-git-plugin'
+" Linting
+Plug 'w0rp/ale'
 call plug#end()
 
 " Use true-color for colorscheme
@@ -30,6 +32,11 @@ colorscheme monokai
 set number
 " Sets tab width to 2
 set tabstop=2
+" Don't use softtabs
+set softtabstop=0
+" Actually use tabs over spaces
+set noexpandtab
+" ??? Some more tab display stuff
 set shiftwidth=2
 " Enable mouse support
 set mouse=a
@@ -53,6 +60,8 @@ vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 " Keybind 'copy selection' to system clipboard
 vmap <C-c> "+y
+" Keybind the terminal-mode exit keys to Escape
+tnoremap <Esc> <C-\><C-n>
 
 " Tells YouCompleteMe where the compilation flags are at
 let g:ycm_global_ycm_extra_conf = '~/.config/nvim/.ycm_extra_conf.py'
@@ -62,16 +71,34 @@ let g:ycm_global_ycm_extra_conf = '~/.config/nvim/.ycm_extra_conf.py'
 
 " Create formatters for vim-autoformat to use
 let g:formatdef_uncrustify = '"uncrustify -q -c ~/dev/personal-configs/uncrustify.cfg -l CPP"'
-" NOTE: --use-tabs since checking for tabs seems to not work?
-let g:formatdef_luafmt = '"luafmt --use-tabs --stdin -i ".&shiftwidth'
-let g:formatdef_prettier_markdown = '"prettier --stdin --parser markdown --use-tabs true --tab-width ".&shiftwidth'
-let g:formatdef_shfmt = '"shfmt -s -i 0"'
-"let g:formatdef_cmake_format = '"cmake-format --dangle-parens true --line-ending unix --tab-size 1"'
+
+" Check if we're using tabs
+if &expandtab ==? 'noexpandtab'
+	" luafmt doesn't accept true/false into --use-tabs
+	let g:formatdef_luafmt = '"luafmt --use-tabs --stdin -i ".&shiftwidth'
+	" A 0 passed to -i signifies tabs
+	let g:formatdef_shfmt = '"shfmt -s -i 0"'
+	let g:formatdef_prettier_markdown = '"prettier --stdin --parser markdown --use-tabs true --tab-width ".&shiftwidth'
+	let g:formatdef_prettier_json = '"prettier --stdin --parser json --use-tabs true --tab-width ".&shiftwidth'
+	let g:formatdef_prettier_javascript = '"prettier --stdin --use-tabs true --tab-width ".&shiftwidth'
+else
+	let g:formatdef_luafmt = '"luafmt --stdin -i ".&shiftwidth'
+	" shfmt uses non-zero values to the -i flag for spaces
+	let g:formatdef_shfmt = '"shfmt -s -i ".&shiftwidth'
+	let g:formatdef_prettier_markdown = '"prettier --stdin --parser markdown --use-tabs false --tab-width ".&shiftwidth'
+	let g:formatdef_prettier_json = '"prettier --stdin --parser json --use-tabs false --tab-width ".&shiftwidth'
+	let g:formatdef_prettier_javascript = '"prettier --stdin --use-tabs false --tab-width ".&shiftwidth'
+endif
+
+" The dash at the end tells it to use stdin
+"let g:formatdef_cmake_format = '"cmake-format --command-case lower --dangle-parens true --line-ending unix --tab-size 1 -"'
 " Actually tells vim-autoformat to use the custom command on C++ files
 let g:formatters_cpp = ['uncrustify']
 let g:formatters_lua = ['luafmt']
 let g:formatters_markdown = ['prettier_markdown']
 let g:formatters_sh = ['shfmt']
+let g:formatters_javascript = ['prettier_javascript']
+let g:formatters_json = ['prettier_json']
 "let g:formatters_cmake = ['cmake_format']
 " Disables the fallback formatting if vim-autoformat doesn't find a formatter
 let g:autoformat_autoindent = 0
