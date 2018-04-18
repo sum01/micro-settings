@@ -22,6 +22,8 @@ Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 " Linting
 Plug 'w0rp/ale'
+" Auto-close brackets
+Plug 'jiangmiao/auto-pairs'
 call plug#end()
 
 " Use true-color for colorscheme
@@ -106,3 +108,6 @@ let g:autoformat_retab = 0
 let g:autoformat_remove_trailing_spaces = 0
 " Tells vim-autoformat to run on-save
 au BufWrite * :Autoformat
+
+" Disable the crappy Fuchsia lints for the Ale plugin
+let g:ale_cpp_clangtidy_checks=['-fuchsia*']
