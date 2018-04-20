@@ -72,7 +72,25 @@ let g:ycm_global_ycm_extra_conf = '~/.config/nvim/.ycm_extra_conf.py'
 "let g:autoformat_verbosemode=1
 
 " Create formatters for vim-autoformat to use
-let g:formatdef_uncrustify = '"uncrustify -q -c ~/dev/personal-configs/uncrustify.cfg -l CPP"'
+
+" This function finds and returns an uncrustify config file
+" If no local one found, it uses my fall-back
+function! s:GetUncrustConf()
+	" globpath finds the cfg file (or nothing), fnamemodify turns it into an absolute path
+	let l:uncrustconf = fnamemodify(globpath('.', '*.cfg'), ':p')
+
+	" Actually check if there's an uncrustify config in the current dir
+	if filereadable(l:uncrustconf)
+		return l:uncrustconf
+	else
+		" My fall-back config file
+		return '~/dev/personal-configs/formatter-configs/uncrustify.cfg'
+	endif
+endfunction
+
+" This defines uncrustify with the current local cfg, or my fall-back
+" Although it won't dynamically reload, so close vim if changing projects...
+let g:formatdef_uncrustify = "'" . "uncrustify -q -l CPP -c " . s:GetUncrustConf() . "'"
 
 " Check if we're using tabs
 if &expandtab ==? 'noexpandtab'
