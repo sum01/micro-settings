@@ -11,7 +11,7 @@ call plug#begin()
 " download
 Plug 'valloric/youcompleteme', { 'do': './install.py --clang-completer --system-libclang --system-boost' }
 " The Monokai colorscheme
-Plug 'crusoexia/vim-monokai'
+Plug 'sickill/vim-monokai'
 " Editorconfig support
 Plug 'editorconfig/editorconfig-vim'
 " Code auto-formatter
@@ -124,8 +124,31 @@ let g:formatters_json = ['prettier_json']
 let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
 let g:autoformat_remove_trailing_spaces = 0
+
+" A custom var to toggle on/off as needed
+let g:autoformat_run_on_save = 1
+function! s:ToggleAutoformat()
+	if (g:autoformat_run_on_save)
+		let g:autoformat_run_on_save = 0
+		echom 'Disabled formatting on-save'
+	else
+		let g:autoformat_run_on_save = 1
+		echom 'Enabled formatting on-save'
+	endif
+endfunction
+
+command! ToggleAutoformat call s:ToggleAutoformat()
+
+" Run autoformat only if enabled
+function! g:RunAutoformatIfEnabled()
+	if (g:autoformat_run_on_save)
+		" Runs the command created by vim-autoformat plugin
+		Autoformat
+	endif
+endfunction
+
 " Tells vim-autoformat to run on-save
-au BufWrite * :Autoformat
+au BufWrite * :call RunAutoformatIfEnabled()
 
 " Disable the crappy Fuchsia lints for the Ale plugin
 let g:ale_cpp_clangtidy_checks=['-fuchsia*']
