@@ -1,29 +1,29 @@
 " auto-install vim-plug
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
-				silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-				autocmd VimEnter * PlugInstall
+	silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	autocmd VimEnter * PlugInstall
 endif
 
 " Plug (plugin manager) plugins
 " All are from Github.com
 call plug#begin()
-" Autocompletion. Note that install.py needs to run as it has to be compiled after
-" download
-Plug 'valloric/youcompleteme', { 'do': './install.py --clang-completer --system-libclang --system-boost' }
-" The Monokai colorscheme
-Plug 'sickill/vim-monokai'
-" Editorconfig support
-Plug 'editorconfig/editorconfig-vim'
-" Code auto-formatter
-Plug 'Chiel92/vim-autoformat'
-" File browser
-Plug 'scrooloose/nerdtree'
-" A nerdtree plugin that adds Git status indicators
-Plug 'Xuyuanp/nerdtree-git-plugin'
-" Linting
-Plug 'w0rp/ale'
-" Auto-close brackets
-Plug 'jiangmiao/auto-pairs'
+	" Autocompletion. Note that install.py needs to run as it has to be compiled after
+	" download
+	Plug 'valloric/youcompleteme', { 'do': './install.py --clang-completer --system-libclang --system-boost' }
+	" The Monokai colorscheme
+	Plug 'sickill/vim-monokai'
+	" Editorconfig support
+	Plug 'editorconfig/editorconfig-vim'
+	" Code auto-formatter
+	Plug 'Chiel92/vim-autoformat'
+	" File browser
+	Plug 'scrooloose/nerdtree'
+	" A nerdtree plugin that adds Git status indicators
+	Plug 'Xuyuanp/nerdtree-git-plugin'
+	" Linting
+	Plug 'w0rp/ale'
+	" Auto-close brackets
+	"Plug 'jiangmiao/auto-pairs'
 call plug#end()
 
 " Use true-color for colorscheme
@@ -126,22 +126,32 @@ let g:autoformat_retab = 0
 let g:autoformat_remove_trailing_spaces = 0
 
 " A custom var to toggle on/off as needed
-let g:autoformat_run_on_save = 1
+let s:autoformat_run_on_save = 1
+" For when you know you want it disabled
+function! s:DisableAutoformat()
+	let s:autoformat_run_on_save = 0
+	echom 'Disabled auto-formatting'
+endfunction
+" For when you know you want it enabled
+function! s:EnableAutoformat()
+	let s:autoformat_run_on_save = 1
+	echom 'Enabled auto-formatting'
+endfunction
 function! s:ToggleAutoformat()
-	if (g:autoformat_run_on_save)
-		let g:autoformat_run_on_save = 0
-		echom 'Disabled formatting on-save'
+	if (s:autoformat_run_on_save)
+		call s:DisableAutoformat()
 	else
-		let g:autoformat_run_on_save = 1
-		echom 'Enabled formatting on-save'
+		call s:EnableAutoformat()
 	endif
 endfunction
 
 command! ToggleAutoformat call s:ToggleAutoformat()
+command! DisableAutoformat call s:DisableAutoformat()
+command! EnableAutoformat call s:EnableAutoformat()
 
 " Run autoformat only if enabled
 function! g:RunAutoformatIfEnabled()
-	if (g:autoformat_run_on_save)
+	if (s:autoformat_run_on_save)
 		" Runs the command created by vim-autoformat plugin
 		Autoformat
 	endif
