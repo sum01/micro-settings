@@ -1,4 +1,4 @@
-" auto-install vim-plug
+" Auto-installs vim-plug if not installed
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
 	silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	autocmd VimEnter * PlugInstall
@@ -7,8 +7,8 @@ endif
 " Plug (plugin manager) plugins
 " All are from Github.com
 call plug#begin()
-	" Autocompletion. Note that install.py needs to run as it has to be compiled after
-	" download
+	" Autocompletion. Note that install.py runs after install
+	" Requires Boost & Clang installed at the system level
 	Plug 'valloric/youcompleteme', { 'do': './install.py --clang-completer --system-libclang --system-boost' }
 	" The Monokai colorscheme
 	Plug 'sickill/vim-monokai'
@@ -16,14 +16,16 @@ call plug#begin()
 	Plug 'editorconfig/editorconfig-vim'
 	" Code auto-formatter
 	Plug 'Chiel92/vim-autoformat'
-	" File browser
+	" Linting
+	Plug 'w0rp/ale'
+	" Makes the statusline a lot better
+	Plug 'vim-airline/vim-airline'
+	" Adds a bunch of themes to the vim-airline plugin
+	Plug 'vim-airline/vim-airline-themes'
+	" Adds a file-tree viewer
 	Plug 'scrooloose/nerdtree'
 	" A nerdtree plugin that adds Git status indicators
 	Plug 'Xuyuanp/nerdtree-git-plugin'
-	" Linting
-	Plug 'w0rp/ale'
-	" Auto-close brackets
-	"Plug 'jiangmiao/auto-pairs'
 call plug#end()
 
 " Use true-color for colorscheme
@@ -130,22 +132,14 @@ let s:autoformat_run_on_save = 1
 " For when you know you want it disabled
 function! s:DisableAutoformat()
 	let s:autoformat_run_on_save = 0
-	echom 'Disabled auto-formatting'
+	echom 'Disabled auto-formatting on-save'
 endfunction
 " For when you know you want it enabled
 function! s:EnableAutoformat()
 	let s:autoformat_run_on_save = 1
-	echom 'Enabled auto-formatting'
-endfunction
-function! s:ToggleAutoformat()
-	if (s:autoformat_run_on_save)
-		call s:DisableAutoformat()
-	else
-		call s:EnableAutoformat()
-	endif
+	echom 'Enabled auto-formatting on-save'
 endfunction
 
-command! ToggleAutoformat call s:ToggleAutoformat()
 command! DisableAutoformat call s:DisableAutoformat()
 command! EnableAutoformat call s:EnableAutoformat()
 
@@ -162,3 +156,8 @@ au BufWrite * :call RunAutoformatIfEnabled()
 
 " Disable the crappy Fuchsia lints for the Ale plugin
 let g:ale_cpp_clangtidy_checks=['-fuchsia*']
+" Sets the Airline plugin theme on startup (requires airline_themes plugin)
+let g:airline_theme = 'minimalist'
+" Tells Airline to reskin the tabline as well
+" This shows all existing buffers, which is a bit annoying...
+let g:airline#extensions#tabline#enabled = 1
