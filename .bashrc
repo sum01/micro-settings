@@ -27,9 +27,6 @@ alias cppcheck='cppcheck -q --enable=all --suppress=missingIncludeSystem'
 # Make sure exiftool wipes all info on the target file
 alias exiftool='exiftool -overwrite_original -all='
 
-# ~~ Shortcuts for text editors ~~
-# One letter to launch editor
-alias m='micro'
 # One letter to launch editor
 alias n='nvim'
 
@@ -44,7 +41,5 @@ alias getgpl3='cp ~/dev/personal-configs/licenses/gpl3/LICENSE ./ && echo "Put G
 alias getuncrust='cp ~/dev/personal-configs/formatter-configs/uncrustify.cfg ./ && echo "Put Uncrustify config in $(pwd)"'
 # A command to start a new git project which gets stuff that's (almost) always needed
 alias gitinit='git init && geteconf && getgpl3'
-# A pre-configured C++ gitignore file
-alias getcppgitignore='cp ~/dev/personal-configs/gitignores/cpp/.gitignore ./ && echo "Put .gitignore in $(pwd)"'
-# A quickstart for new C++ projects
-alias newcpp='mkdir -p build src && touch CMakeLists.txt src/main.cpp && gitinit && getuncrust && getcppgitignore'
+# A quickstart for new C++ projects | Seperate uncrustify getter since I don't want to hold it in the project-templates/
+alias newcpp='cp -r ~/dev/personal-configs/project-templates/cpp/. ./ && getuncrust && gitinit'
