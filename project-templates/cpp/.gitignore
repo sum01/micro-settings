@@ -9,3 +9,5 @@ CMakeLists.txt.user
 .DS_STORE
 # Created by the Dolphin file browser (maybe others?)
 .directory
+# Used by Cquery for language-server stuff
+compile_commands.json
