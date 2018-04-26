@@ -13,8 +13,6 @@ EDITOR=/usr/bin/nvim
 # <<< END ADDED BY CNCHI INSTALLER
 
 # ~~ Environment vars for editors & stuff ~~
-# Tells Micro that it's on a truecolor terminal
-export MICRO_TRUECOLOR=1
 # The GOPATH var is for using 'go get'
 export GOPATH="$HOME/dev/gopath"
 
@@ -43,3 +41,6 @@ alias getuncrust='cp ~/dev/personal-configs/formatter-configs/uncrustify.cfg ./ 
 alias gitinit='git init && geteconf && getgpl3'
 # A quickstart for new C++ projects | Seperate uncrustify getter since I don't want to hold it in the project-templates/
 alias newcpp='cp -r ~/dev/personal-configs/project-templates/cpp/. ./ && getuncrust && gitinit'
+# This runs cmake/make in 1 command
+# It also creates the compile_commands.json needed by Cquery
+alias buildwithcmake='cd build && cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .. && make && ln -sf compile_commands.json ../; cd ..'
