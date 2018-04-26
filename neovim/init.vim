@@ -7,17 +7,19 @@ endif
 " Plug (plugin manager) plugins
 " All are from Github.com
 call plug#begin()
+	" TODO: Remove youcompleteme & ale if LSP works better...
 	" Autocompletion. Note that install.py runs after install
 	" Requires Boost & Clang installed at the system level
-	Plug 'valloric/youcompleteme', { 'do': './install.py --clang-completer --system-libclang --system-boost' }
+	"Plug 'valloric/youcompleteme', { 'do': './install.py --clang-completer --system-libclang --system-boost' }
+	" Linting
+	"Plug 'w0rp/ale'
+
 	" The Monokai colorscheme
 	Plug 'sickill/vim-monokai'
 	" Editorconfig support
 	Plug 'editorconfig/editorconfig-vim'
 	" Code auto-formatter
 	Plug 'Chiel92/vim-autoformat'
-	" Linting
-	Plug 'w0rp/ale'
 	" Makes the statusline a lot better
 	Plug 'vim-airline/vim-airline'
 	" Adds a bunch of themes to the vim-airline plugin
@@ -26,8 +28,38 @@ call plug#begin()
 	Plug 'scrooloose/nerdtree'
 	" A nerdtree plugin that adds Git status indicators
 	Plug 'Xuyuanp/nerdtree-git-plugin'
+	" This is an autocomplete engine, and is used by LanguageClient-neovim
+	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+	" The raw snippets for neosnippet
+	Plug 'Shougo/neosnippet-snippets'
+	" This is needed for LanguageClient-neovim auto-completion
+	Plug 'Shougo/neosnippet.vim'
+	" This provides an LSP API, which you use for any language servers you have
+	Plug 'autozimu/LanguageClient-neovim', {
+	\ 'branch': 'next',
+	\ 'do': './install.sh',
+	\ }
 call plug#end()
 
+let g:deoplete#enable_at_startup = 1
+" Makes tab work for the auto-complete snippets dropdown
+imap <expr><TAB>
+	\ pumvisible() ? "\<C-n>" :
+	\ neosnippet#expandable_or_jumpable() ?
+	\    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+			\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+let g:LanguageClient_serverCommands = {
+	\ 'cpp': ['cquery', '--log-file=/tmp/cq.log'],
+	\ 'c': ['cquery', '--log-file=/tmp/cq.log'],
+\ }
+
+" This expects your settings.json to be in the same dir as your init.vim
+let g:LanguageClient_settingsPath = expand('<sfile>:p:h') . '/settings.json'
+let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
+" No idea what this crap is, but it was recommended...
+set completefunc=LanguageClient#complete
+set formatexpr=LanguageClient_textDocument_rangeFormatting()
 " Use true-color for colorscheme
 set termguicolors
 " Colorscheme has to come after the plug#end() or it breaks things
