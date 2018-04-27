@@ -7,13 +7,8 @@ endif
 " Plug (plugin manager) plugins
 " All are from Github.com
 call plug#begin()
-	" TODO: Remove youcompleteme & ale if LSP works better...
-	" Autocompletion. Note that install.py runs after install
-	" Requires Boost & Clang installed at the system level
-	"Plug 'valloric/youcompleteme', { 'do': './install.py --clang-completer --system-libclang --system-boost' }
 	" Linting
-	"Plug 'w0rp/ale'
-
+	Plug 'w0rp/ale'
 	" The Monokai colorscheme
 	Plug 'sickill/vim-monokai'
 	" Editorconfig support
@@ -41,25 +36,6 @@ call plug#begin()
 	\ }
 call plug#end()
 
-let g:deoplete#enable_at_startup = 1
-" Makes tab work for the auto-complete snippets dropdown
-imap <expr><TAB>
-	\ pumvisible() ? "\<C-n>" :
-	\ neosnippet#expandable_or_jumpable() ?
-	\    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-			\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-let g:LanguageClient_serverCommands = {
-	\ 'cpp': ['cquery', '--log-file=/tmp/cq.log'],
-	\ 'c': ['cquery', '--log-file=/tmp/cq.log'],
-\ }
-
-" This expects your settings.json to be in the same dir as your init.vim
-let g:LanguageClient_settingsPath = expand('<sfile>:p:h') . '/settings.json'
-let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
-" No idea what this crap is, but it was recommended...
-set completefunc=LanguageClient#complete
-set formatexpr=LanguageClient_textDocument_rangeFormatting()
 " Use true-color for colorscheme
 set termguicolors
 " Colorscheme has to come after the plug#end() or it breaks things
@@ -99,13 +75,8 @@ vmap <C-c> "+y
 " Keybind the terminal-mode exit keys to Escape
 tnoremap <Esc> <C-\><C-n>
 
-" Tells YouCompleteMe where the compilation flags are at
-let g:ycm_global_ycm_extra_conf = '~/.config/nvim/.ycm_extra_conf.py'
-
 " DEBUG: Print error crap
 "let g:autoformat_verbosemode=1
-
-" Create formatters for vim-autoformat to use
 
 " This function finds and returns an uncrustify config file
 " If no local one found, it uses my fall-back
@@ -144,10 +115,13 @@ else
 	let g:formatdef_prettier_javascript = '"prettier --stdin --use-tabs false --tab-width ".&shiftwidth'
 endif
 
-" The dash at the end tells it to use stdin
-"let g:formatdef_cmake_format = '"cmake-format --command-case lower --dangle-parens true --line-ending unix --tab-size 1 -"'
-" Actually tells vim-autoformat to use the custom command on C++ files
-let g:formatters_cpp = ['uncrustify']
+" Prefer astyle only if the working dir has a config file
+if filereadable('.astylerc')
+	let g:formatters_cpp = ['astyle_cpp']
+else
+	" Otherwise just use uncrustify
+	let g:formatters_cpp = ['uncrustify']
+endif
 let g:formatters_lua = ['luafmt']
 let g:formatters_markdown = ['prettier_markdown']
 let g:formatters_sh = ['shfmt']
@@ -186,10 +160,31 @@ endfunction
 " Tells vim-autoformat to run on-save
 au BufWrite * :call RunAutoformatIfEnabled()
 
-" Disable the crappy Fuchsia lints for the Ale plugin
-let g:ale_cpp_clangtidy_checks=['-fuchsia*']
+" Disable linting for C/C++ files since we're using a language server on them
+let g:ale_pattern_options = {'\.[ch][p]*$': {'ale_enabled': 0}}
 " Sets the Airline plugin theme on startup (requires airline_themes plugin)
 let g:airline_theme = 'minimalist'
 " Tells Airline to reskin the tabline as well
-" This shows all existing buffers, which is a bit annoying...
 let g:airline#extensions#tabline#enabled = 1
+" Enables Deoplete | Why can't this be default?...
+let g:deoplete#enable_at_startup = 1
+" Makes tab work for the auto-complete snippets dropdown
+imap <expr><TAB>
+	\ pumvisible() ? "\<C-n>" :
+	\ neosnippet#expandable_or_jumpable() ?
+	\    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+			\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+" Defines available language servers
+" NOTE: As you add more, their commands must be written here
+let g:LanguageClient_serverCommands = {
+	\ 'cpp': ['cquery', '--log-file=/tmp/cq.log'],
+	\ 'c': ['cquery', '--log-file=/tmp/cq.log'],
+\ }
+
+" This expects your settings.json to be in the same dir as your init.vim
+let g:LanguageClient_settingsPath = expand('<sfile>:p:h') . '/settings.json'
+let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
+" No idea what this crap is, but it was recommended...
+set completefunc=LanguageClient#complete
+set formatexpr=LanguageClient_textDocument_rangeFormatting()
