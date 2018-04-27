@@ -1,0 +1,16 @@
+[core]
+	editor = nvim
+	# Adds color highlights to the diff, and makes tabs appear smaller
+	pager = /usr/share/git/diff-highlight/diff-highlight | less -rx1,5
+	# Uses my personal gitignore without having to put it in other peoples projects
+	# Useful for things like the compile_commands.json
+	excludesfile = ~/dev/personal-configs/project-templates/cpp/.gitignore
+[user]
+	name = sum01
+	email = sum01@protonmail.com
+	signingkey = 339CB8BE119B90C0
+[diff]
+	# I should probably use Nvim's diff tool, but oh well...
+	tool = meld
+[merge]
+  tool = meld
