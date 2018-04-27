@@ -43,4 +43,4 @@ alias gitinit='git init && geteconf && getgpl3'
 alias newcpp='cp -r ~/dev/personal-configs/project-templates/cpp/. ./ && getuncrust && gitinit'
 # This runs cmake/make in 1 command
 # It also creates the compile_commands.json needed by Cquery
-alias buildwithcmake='cd build && cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .. && make && ln -sf compile_commands.json ../; cd ..'
+alias cmakebuild='cd build && cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .. && make -j$(nproc) && ln -sf compile_commands.json ../; cd ..'
