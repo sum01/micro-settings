@@ -38,6 +38,8 @@ call plug#end()
 
 " Use true-color for colorscheme
 set termguicolors
+" Tells syntax highlighting we're using a dark background to make it better
+set background=dark
 " Colorscheme has to come after the plug#end() or it breaks things
 colorscheme monokai
 " Enables the line number ruler
@@ -160,8 +162,11 @@ endfunction
 " Tells vim-autoformat to run on-save
 au BufWrite * :call RunAutoformatIfEnabled()
 
+
+" Disable the crappy Fuchsia lints for the Ale plugin
+let g:ale_cpp_clangtidy_checks=['-fuchsia*']
 " Disable linting for C/C++ files since we're using a language server on them
-let g:ale_pattern_options = {'\.[ch][p]*$': {'ale_enabled': 0}}
+"let g:ale_pattern_options = {'\.[ch][p]*$': {'ale_enabled': 0}}
 " Sets the Airline plugin theme on startup (requires airline_themes plugin)
 let g:airline_theme = 'minimalist'
 " Tells Airline to reskin the tabline as well
@@ -188,3 +193,5 @@ let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if yo
 " No idea what this crap is, but it was recommended...
 set completefunc=LanguageClient#complete
 set formatexpr=LanguageClient_textDocument_rangeFormatting()
+
+command! CmakeBuild :!bash -c 'cd build && cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .. && ln -sf compile_commands.json ../ && make -j$(nproc) && if [[ -d "$(pwd)/Testing" ]]; then make test; fi; cd ..'
