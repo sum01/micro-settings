@@ -162,7 +162,6 @@ endfunction
 " Tells vim-autoformat to run on-save
 au BufWrite * :call RunAutoformatIfEnabled()
 
-
 " Disable the crappy Fuchsia lints for the Ale plugin
 let g:ale_cpp_clangtidy_checks=['-fuchsia*']
 " Disable linting for C/C++ files since we're using a language server on them
@@ -195,3 +194,7 @@ set completefunc=LanguageClient#complete
 set formatexpr=LanguageClient_textDocument_rangeFormatting()
 
 command! CmakeBuild :!bash -c 'cd build && cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .. && ln -sf compile_commands.json ../ && make -j$(nproc) && if [[ -d "$(pwd)/Testing" ]]; then make test; fi; cd ..'
+
+" Lets us move selections left or right
+vmap <C-l> xpgvlolo
+vmap <C-h> xhPgvhoho
