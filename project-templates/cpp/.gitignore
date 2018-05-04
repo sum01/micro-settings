@@ -1,3 +1,5 @@
+# Git leftovers
+*.orig
 # A generic build dir for Cmake projects
 build
 # Created by Kdevelop
