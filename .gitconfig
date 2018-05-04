@@ -13,4 +13,4 @@
 	# I should probably use Nvim's diff tool, but oh well...
 	tool = meld
 [merge]
-  tool = meld
+	tool = meld
