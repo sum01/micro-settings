@@ -6,7 +6,7 @@ build
 .kdev
 .kdev4
 # Created by QtCreator
-CMakeLists.txt.user
+*.user
 # Created by OSX/macOS users
 .DS_STORE
 # Created by the Dolphin file browser (maybe others?)
