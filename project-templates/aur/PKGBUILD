@@ -1,0 +1,22 @@
+pkgname=
+pkgver=
+pkgrel=1
+pkgdesc=''
+arch=('i686' 'x86_64')
+url=''
+license=('')
+depends=('')
+makedepends=('')
+optdepends=('')
+source=("")
+sha512sums=('')
+prepare() {
+}
+pkgver() {
+}
+build() {
+}
+check() {
+}
+package() {
+}

@@ -41,6 +41,7 @@ alias getuncrust='cp ~/dev/personal-configs/formatter-configs/uncrustify.cfg ./ 
 alias gitinit='git init && geteconf && getgpl3'
 # A quickstart for new C++ projects | Seperate uncrustify getter since I don't want to hold it in the project-templates/
 alias newcpp='cp -r ~/dev/personal-configs/project-templates/cpp/. ./ && getuncrust && gitinit'
+alias newaur='cp -r ~/dev/personal-configs/project-templates/aur/. ./ && geteconf'
 # This runs cmake/make in 1 command
 # It also creates the compile_commands.json needed by Cquery
-alias cmakebuild='cd build && cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .. && ln -sf compile_commands.json ../ && make -j$(nproc) && if [[ -d "$(pwd)/Testing" ]]; then make test; fi; cd ..'
+alias cmakebuild='mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .. && ln -sf compile_commands.json ../ && make -j$(nproc) && if [[ -d "$(pwd)/Testing" ]]; then make test; fi; cd ..'
